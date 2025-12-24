@@ -1,0 +1,9 @@
+# 環境
+.venv/
+
+# エディター
+.vscode
+.zed
+
+#　大きなディレクトリ
+leaning-videos/

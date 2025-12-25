@@ -1,4 +1,16 @@
 FROM ubuntu:20.04
 
+# アップデート、Pythonインストール
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip
+    apt-get install -y python3 python3-pip libsm6 libxext6 libxrender-dev
+
+# 作業ディレクトリの設定
+WORKDIR /app
+COPY . /app
+# 依存関係のインストール
+RUN pip3 install -r requirements.txt
+# アプリケーションの起動
+CMD ["python3", "app.py"]
+
+#DOCKER実行コマンド例
+# docker run -e DISPLAY=host.docker.internal:0 ` -v /tmp/.X11-unix:/tmp/.X11-unix ` --gpus all ` opencv-deer-detector

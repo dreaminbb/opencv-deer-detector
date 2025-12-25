@@ -1,9 +1,9 @@
 # 環境
 .venv/
-
+leaning-media/
+__pycache__/
 # エディター
 .vscode
 .zed
-
-#　大きなディレクトリ
-leaning-videos/
+learning-media/test
+learning-media

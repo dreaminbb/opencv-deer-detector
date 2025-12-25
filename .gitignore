@@ -1,9 +1,13 @@
 # 環境
 .venv/
-leaning-media/
+learning-media/
 __pycache__/
 # エディター
 .vscode
 .zed
 learning-media/test
 learning-media
+
+# OS
+.DS_Store
+Thumbs.db

@@ -2,6 +2,9 @@
 .venv/
 learning-media/
 __pycache__/
+runs/
+yolov8n.pt
+
 # エディター
 .vscode
 .zed

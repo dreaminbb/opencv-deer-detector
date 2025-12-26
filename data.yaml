@@ -1,6 +1,6 @@
-train: ../train/images
-val: ../valid/images
-test: ../test/images
+train: learning-media/train/images
+val: learning-media/valid/images
+test: learning-media/test/images
 
 nc: 4
-names: ['Female deer', 'fawn', 'male-deer', 'unknown-deer']
+names: ["Female deer", "fawn", "male-deer", "unknown-deer"]

@@ -1,4 +1,5 @@
 import argparse
+import yaml
 
 
 # 設定のクラス
@@ -10,11 +11,19 @@ class Config:
         "MODEL_PATH": "models/deer_detector.onnx",
         "DATA_CONFIG_PATH": "data.yaml",
         "DEVICE": "gpu",
-        # 画像処理関連
+        # 画像処理関連 yamlファイルから読み込む
+        "DATA_YAML_FILENAME": "docker_data.yaml",
         "IMAGE_SIZE": 640,
+        "media_root": "",
+        "train_image_dir": "",
+        "val_image_dir": "",
+        "test_image_dir": "",
+        "nc": 0,
+        "names": [],
     }
 
     def __init__(self):
+        self.fetch_yaml_config()
         pass
 
     @staticmethod
@@ -22,6 +31,24 @@ class Config:
         config = Config()
         config.fetch_run_arguments()
         return config
+
+    def fetch_yaml_config(self) -> dict:
+
+        print("YAMLファイルを読み込み中。。。")
+        # ファイル読み込み
+        file = open("./docker_data.yaml", "r")
+        config = yaml.safe_load(file)
+
+        self.CONFIG["media_root"] = config["path"]
+        self.CONFIG["train_image_dir"] = config["train"]
+        self.CONFIG["val_image_dir"] = config["val"]
+        self.CONFIG["test_image_dir"] = config["test"]
+        self.CONFIG["nc"] = config["nc"]
+        self.CONFIG["names"] = config["names"]
+        file.close()
+        print("YAMLファイルの読み込み完了")
+        print(config)
+        return
 
     def fetch_config(self) -> dict:
         return {

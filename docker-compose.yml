@@ -1,0 +1,17 @@
+services:
+  app:
+    build: .
+    image: opencv-deer-detector
+    shm_size: "8gb"
+    volumes:
+      - .:/app
+    # GPUリソースの割り当て（NVIDIA GPUが利用可能な場合）
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    # コンテナ終了後も削除しない場合はコメントアウトを外す
+    # restart: unless-stopped

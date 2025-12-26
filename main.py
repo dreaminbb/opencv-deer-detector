@@ -3,15 +3,14 @@
 # [] 指定した画像から検出を行う
 # [] 動画から検出を行う
 # [] 検出した動画をリアルタイムで表示、保存する
-import asyncio
 from app.src.config import Config
 from app.src.model.train import TrainModel
 
 
-async def main():
+def main():
     cfd = Config.initialize()
-    await TrainModel.train(cfd)
+    TrainModel.train(cfd)
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()

@@ -1,5 +1,6 @@
 import argparse
 import yaml
+import torch
 
 
 # 設定のクラス
@@ -7,12 +8,13 @@ import yaml
 class Config:
 
     _instance = None
+    INITIALIZE_CONFIG = {}
 
     CONFIG = {
         "RUN_MODE": "training",
         "MODEL_PATH": "models/deer_detector.onnx",
         "DATA_CONFIG_PATH": "data.yaml",
-        "DEVICE": "gpu",
+        "DEVICE": "gpu",  # 計算デバイス設定、GPU,CUDA,MPS
         # 画像処理関連 yamlファイルから読み込む
         "DATA_YAML_FILENAME": "docker_data.yaml",
         "MEDIA_ROOT": "",
@@ -39,6 +41,30 @@ class Config:
             cls._instance = super(Config, cls).__new__(cls)
         return cls._instance
 
+    def __init__(self):
+        """
+        設定初期化時に、実行環境に応じた設定に変更する
+        Device -> GPU
+        Docker + Mac -> MPS
+        Docker + Windows/NVIDIA GPU -> CUDA
+        """
+
+        self.fetch_yaml_config()
+        self.fetch_run_arguments()
+        self.INITIALIZE_CONFIG = self.CONFIG
+
+        device = "gpu"
+        if torch.cuda.is_available():
+            device = "cuda"
+        elif torch.backends.mps.is_available():
+            device = "mps"
+        else:
+            device = "gpu"
+
+        self.CONFIG["DEVICE"] = device
+        print(f"使用デバイス: {self.CONFIG['DEVICE']}\n")
+        pass
+
     @classmethod
     def get_config(cls):
         if cls._instance is None:
@@ -49,14 +75,6 @@ class Config:
     def get(cls, key, default=None):
         config = cls.get_config()
         return config.get(key, default)
-
-    INITIALIZE_CONFIG = {}
-
-    def __init__(self):
-        self.fetch_yaml_config()
-        self.fetch_run_arguments()
-        self.INITIALIZE_CONFIG = self.CONFIG
-        pass
 
     @staticmethod
     def initialize():
@@ -101,6 +119,9 @@ class Config:
         parser.add_argument(
             "--model_size", type=str, default="n", help="YOLOモデルサイズ指定"
         )
+        parser.add_argument(
+            "--workers", type=int, default=4, help="データローダーのワーカー数"
+        )
 
         opt = {
             "env": parser.parse_args().env,
@@ -108,6 +129,7 @@ class Config:
             "epochs": parser.parse_args().epochs,
             "batch_size": parser.parse_args().batch_size,
             "model_size": parser.parse_args().model_size,
+            "workers": parser.parse_args().workers,
         }
 
         self.CONFIG["RUN_MODE"] = (
@@ -118,6 +140,7 @@ class Config:
         self.CONFIG["EPOCHS"] = opt["epochs"]
         self.CONFIG["BATCH_SIZE"] = opt["batch_size"]
         self.CONFIG["YOLO_MODEL_SIZE"] = opt["model_size"]
+        self.CONFIG["WORKERS"] = opt["workers"]
 
         debug_msg = (
             f"RUN_MODE: {self.CONFIG['RUN_MODE']}, DEVICE: {self.CONFIG['DEVICE']}"

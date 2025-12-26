@@ -1,14 +1,11 @@
 from ultralytics import YOLO
-import torch
-import os
-import cv2
 
 
 class TrainModel:
 
     # 学習させる
     @staticmethod
-    async def train(cfd: object) -> object:
+    def train(cfd: object) -> object:
         """
         データセットを使用してPytorchを用いてYOLOモデルを学習する
         """
@@ -29,7 +26,9 @@ class TrainModel:
             name="deer_training",
             save_period=10,
             val=True,
-            
+            verbose=True,
+            device=cfd["DEVICE"],
+            workers=cfd["WORKERS"],
         )
 
         print(f"学習完了\n学習済みモデル: runs/detect/deer_training/weights/best.pt")

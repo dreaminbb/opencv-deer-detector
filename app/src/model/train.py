@@ -31,9 +31,9 @@ class TrainModel:
             workers=cfd["WORKERS"],
         )
 
-        print(f"学習完了\n学習済みモデル: runs/detect/deer_training/weights/best.pt")
-
         return results
+
+    # TODO: 学習済みモデル実際に検知する処理を追加
 
     # def detect_image(image_path, model_path="runs/detect/deer_training/weights/best.pt"):
     #     """

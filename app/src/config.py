@@ -85,7 +85,7 @@ class Config:
 
         print("YAMLファイルを読み込み中。。。\n")
         # ファイル読み込み
-        file = open("./docker_data.yaml", "r")
+        file = open("./docker_data.yaml", "r", encoding="utf-8")
         config = yaml.safe_load(file)
 
         self.CONFIG["MEDIA_ROOT"] = config["path"]

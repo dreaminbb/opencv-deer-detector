@@ -2,7 +2,6 @@ services:
   app:
     build: .
     image: opencv-deer-detector
-    shm_size: "8gb"
     volumes:
       - .:/app
     # GPUリソースの割り当て（NVIDIA GPUが利用可能な場合）

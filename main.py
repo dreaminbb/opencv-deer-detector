@@ -1,7 +1,5 @@
 # YOLOv8を使用した鹿検出システム
-# [] デバイスで学習を最適化させる（Windows -> CUDA、 Mac -> MPS）
-# [] 指定した画像から検出を行う
-# [] 動画から検出を行う
+# [] 動画（カメラ）から検出を行う
 # [] 検出した動画をリアルタイムで表示、保存する
 from app.src.config import Config
 from app.src.model.train import TrainModel
@@ -9,7 +7,9 @@ from app.src.model.train import TrainModel
 
 def main():
     cfd = Config.initialize()
-    TrainModel.train(cfd)
+    model_path = "runs/detect/deer_training5/weights/best.pt"
+    # TrainModel.train(cfd)
+    TrainModel.test_model(model_path=model_path, cfd=cfd)
 
 
 if __name__ == "__main__":

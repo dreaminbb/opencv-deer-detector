@@ -17,10 +17,10 @@ class Config:
         "DEVICE": "gpu",  # 計算デバイス設定、GPU,CUDA,MPS
         # 画像処理関連 yamlファイルから読み込む
         "DATA_YAML_FILENAME": "docker_data.yaml",
-        "MEDIA_ROOT": "",
-        "TRAIN_IMAGE_DIR": "",
-        "VAL_IMAGE_DIR": "",
-        "TEST_IMAGE_DIR": "",
+        "MEDIA_ROOT": "learning_media",
+        "TRAIN_IMAGE_DIR": "learning_media/train/",
+        "VAL_IMAGE_DIR": "learning_media/val/",
+        "TEST_IMAGE_DIR": "learning_media/test/",
         "EPOCHS": 100,
         "BATCH_SIZE": 16,
         "NC": 0,
@@ -32,8 +32,12 @@ class Config:
         # YOLOv8s	21.5MB	11.2M	高速	44.9	バランス型 => s
         # YOLOv8m	49.7MB	25.9M	中速	50.2	高精度重視 => m
         # YOLOv8l	83.7MB	43.7M	やや遅	52.9	高精度アプリ => l
-        # YOLOv8x	136MB	68.2M	最遅	53.9	最高精度 => x
+        # YOLOv8x	136MB	68.2M	最遅	53.9	最高精度 => xA
+        # モデル使用時のデフォルトパス
+        "MODEL_DEFAULT_PATH": "runs/detect/deer_training/weights/best.pt",
         "YOLO_MODEL_SIZE": "n",
+        # 検出した画像の保存先、tmp/test_results/<timestamp>/
+        "TEST_RESULT_SAVE_PATH": "tmp/test_results/",
     }
 
     def __new__(cls):

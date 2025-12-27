@@ -14,3 +14,4 @@ learning-media
 # OS
 .DS_Store
 Thumbs.db
+tmp/test_results

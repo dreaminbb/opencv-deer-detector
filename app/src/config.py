@@ -38,6 +38,8 @@ class Config:
         "YOLO_MODEL_SIZE": "n",
         # 検出した画像の保存先、tmp/test_results/<timestamp>/
         "TEST_RESULT_SAVE_PATH": "tmp/test_results/",
+        # 検出した動画の保存先
+        "OUTPUT_PATH": "output/",
     }
 
     def __new__(cls):
